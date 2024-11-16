@@ -1,26 +1,46 @@
 package speed
 
-// TODO: define the 'Car' type struct
+// Car defines the properties of a remote-controlled car.
+type Car struct {
+	battery      int
+	batteryDrain int
+	speed        int
+	distance     int
+}
 
-// NewCar creates a new remote controlled car with full battery and given specifications.
+// NewCar creates a new remote-controlled car with a full battery.
 func NewCar(speed, batteryDrain int) Car {
-	panic("Please implement the NewCar function")
+	return Car{
+		battery:      100,
+		batteryDrain: batteryDrain,
+		speed:        speed,
+		distance:     0,
+	}
 }
 
-// TODO: define the 'Track' type struct
+// Track defines the properties of a race track.
+type Track struct {
+	distance int
+}
 
-// NewTrack creates a new track
+// NewTrack creates a new race track with the specified distance.
 func NewTrack(distance int) Track {
-	panic("Please implement the NewTrack function")
+	return Track{
+		distance: distance,
+	}
 }
 
-// Drive drives the car one time. If there is not enough battery to drive one more time,
-// the car will not move.
+// Drive moves the car forward once if there is enough battery.
 func Drive(car Car) Car {
-	panic("Please implement the Drive function")
+	if car.battery >= car.batteryDrain {
+		car.battery -= car.batteryDrain
+		car.distance += car.speed
+	}
+	return car
 }
 
-// CanFinish checks if a car is able to finish a certain track.
+// CanFinish checks if a car can complete a track.
 func CanFinish(car Car, track Track) bool {
-	panic("Please implement the CanFinish function")
+	maxDistance := (car.battery / car.batteryDrain) * car.speed
+	return maxDistance >= track.distance
 }
