@@ -1,18 +1,42 @@
 package elon
 
-// TODO: define the 'Drive()' method
+import "fmt"
 
-// TODO: define the 'DisplayDistance() string' method
+// Drive updates the car's distance and battery based on its speed and battery drain
+func (c *Car) Drive() {
+    // Early return if not enough battery
+    if c.battery < c.batteryDrain {
+        return
+    }
+    
+    // Update battery and distance in one operation
+    c.battery -= c.batteryDrain
+    c.distance += c.speed
+}
 
-// TODO: define the 'DisplayBattery() string' method
+// DisplayDistance returns the current distance as a formatted string
+func (c *Car) DisplayDistance() string {
+    // Using const for string format to improve maintainability
+    const distanceFormat = "Driven %d meters"
+    return fmt.Sprintf(distanceFormat, c.distance)
+}
 
-// TODO: define the 'CanFinish(trackDistance int) bool' method
+// DisplayBattery returns the current battery level as a formatted string
+func (c *Car) DisplayBattery() string {
+    // Using const for string format to improve maintainability
+    const batteryFormat = "Battery at %d%%"
+    return fmt.Sprintf(batteryFormat, c.battery)
+}
 
-// Your first steps could be to read through the tasks, and create
-// these functions with their correct parameter lists and return types.
-// The function body only needs to contain `panic("")`.
-//
-// This will make the tests compile, but they will fail.
-// You can then implement the function logic one by one and see
-// an increasing number of tests passing as you implement more
-// functionality.
+// CanFinish determines if the car can complete the track with current battery
+func (c *Car) CanFinish(trackDistance int) bool {
+    if trackDistance <= 0 {
+        return true
+    }
+    
+    // Calculate maximum possible distance with current battery
+    remainingDrives := c.battery / c.batteryDrain
+    maxDistance := remainingDrives * c.speed
+    
+    return maxDistance >= trackDistance
+}
