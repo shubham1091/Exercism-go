@@ -1,18 +1,18 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package gigasecond should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+// Package gigasecond provides functionality to calculate the time that occurs
+// exactly one gigasecond (1,000,000,000 seconds) after a given time.
+// The purpose of this package is to demonstrate time manipulation using the
+// time package in Go.
 package gigasecond
 
-// import path for the time package from the standard library
 import "time"
 
-// AddGigasecond should have a comment documenting it.
+// AddGigasecond takes a time and returns the time that is exactly one gigasecond
+// (1,000,000,000 seconds) later. The function works by adding a duration of one
+// billion seconds to the given time using the Add method of time.Time.
 func AddGigasecond(t time.Time) time.Time {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	return t
+	// Define a gigasecond as 1 billion seconds
+	gigaSecond := time.Duration(1e9) * time.Second
+	
+	// Add the gigasecond duration to the provided time and return the new time
+	return t.Add(gigaSecond)
 }
