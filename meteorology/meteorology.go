@@ -1,36 +1,63 @@
 package meteorology
 
+import "fmt"
+
 type TemperatureUnit int
 
 const (
-	Celsius    TemperatureUnit = 0
-	Fahrenheit TemperatureUnit = 1
+	Celsius TemperatureUnit = iota
+	Fahrenheit
+	Kelvin
 )
 
-// Add a String method to the TemperatureUnit type
+func (t TemperatureUnit) String() string {
+	switch t {
+	case Celsius:
+		return "°C"
+	case Fahrenheit:
+		return "°F"
+	case Kelvin:
+		return "K"
+	default:
+		return "Unknown"
+	}
+}
 
 type Temperature struct {
 	degree int
 	unit   TemperatureUnit
 }
 
-// Add a String method to the Temperature type
+func (t Temperature) String() string {
+	return fmt.Sprintf("%d %s", t.degree, t.unit)
+}
 
 type SpeedUnit int
 
 const (
-	KmPerHour    SpeedUnit = 0
-	MilesPerHour SpeedUnit = 1
+	KmPerHour SpeedUnit = iota
+	MilesPerHour
 )
 
-// Add a String method to SpeedUnit
+func (s SpeedUnit) String() string {
+	switch s {
+	case KmPerHour:
+		return "km/h"
+	case MilesPerHour:
+		return "mph"
+	default:
+		return "Unknown"
+	}
+}
 
 type Speed struct {
 	magnitude int
 	unit      SpeedUnit
 }
 
-// Add a String method to Speed
+func (s Speed) String() string {
+	return fmt.Sprintf("%d %s", s.magnitude, s.unit)
+}
 
 type MeteorologyData struct {
 	location      string
@@ -40,4 +67,9 @@ type MeteorologyData struct {
 	humidity      int
 }
 
-// Add a String method to MeteorologyData
+func (m MeteorologyData) String() string {
+	return fmt.Sprintf(
+		"%s: %s, Wind %s at %s, %d%% Humidity",
+		m.location, m.temperature, m.windDirection, m.windSpeed, m.humidity,
+	)
+}
