@@ -1,28 +1,35 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package triangle should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+// Package triangle provides functionality to classify triangles based on the lengths of their sides.
 package triangle
 
-
-// Notice KindFromSides() returns this type. Pick a suitable data type.
-type Kind
+// Kind represents the type of a triangle.
+type Kind int
 
 const (
-    // Pick values for the following identifiers used by the test program.
-    NaT // not a triangle
-    Equ // equilateral
-    Iso // isosceles
-    Sca // scalene
+	NaT Kind = iota // not a triangle
+	Equ             // equilateral
+	Iso             // isosceles
+	Sca             // scalene
 )
 
-// KindFromSides should have a comment documenting it.
+// KindFromSides determines the type of a triangle based on the lengths of its sides.
+// It takes three float64 values representing the lengths of the sides.
+// It returns a Kind value indicating the type of the triangle (NaT, Equ, Iso, or Sca).
 func KindFromSides(a, b, c float64) Kind {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	var k Kind
-	return k
+	if isTriangle(a, b, c) {
+		switch {
+		case a == b && b == c:
+			return Equ
+		case a == b || b == c || a == c:
+			return Iso
+		default:
+			return Sca
+		}
+	} else {
+		return NaT
+	}
+}
+
+func isTriangle(a, b, c float64) bool {
+	return a > 0 && b > 0 && c > 0 &&
+		(a+b >= c) && (b+c >= a) && (a+c >= b)
 }
